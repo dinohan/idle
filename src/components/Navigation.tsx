@@ -1,19 +1,19 @@
-import React, { ChangeEvent, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 import styled from '@emotion/styled';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function Navigation() {
-  const [text, setText] = useState('');
+  /* const [text, setText] = useState(''); */
 
-  function onChange(e: ChangeEvent<HTMLInputElement>): void {
+  /* function onChange(e: ChangeEvent<HTMLInputElement>): void {
     setText(e.target.value);
   }
 
   function handleSubmit(): void {
     console.log(text);
-  }
+  } */
 
   return (
     <>
@@ -57,13 +57,20 @@ const Nav = styled.div`
   height: 60px;
   position: fixed;
   background: #49008d;
-
-  display: inline;
 `;
 
-const HomeButton = styled.div``;
+const HomeButton = styled.div`
+  width: 80px;
+  margin: 0 auto;
+`;
 
-const Search = styled.div`
+const Logo = styled.img`
+  margin: 0;
+  height: 60px;
+`;
+
+/* const Search = styled.div`
+  display: inline-block;
   width: 300px;
 `;
 
@@ -72,25 +79,6 @@ const Form = styled.form`
 `;
 
 const Input = styled.input`
-  /* PC (해상도 1024px ~ )*/
-  @media all and (min-width: 1024px) {
-    /*스타일입력*/
-  }
-
-  /* 테블릿 가로, (해상도 768px ~ 1023px)*/
-  @media all and (min-width: 768px) and (max-width: 1023px) {
-    /*스타일입력*/
-  }
-
-  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
-  @media all and (min-width: 480px) and (max-width: 767px) {
-    /*스타일입력*/
-  }
-
-  /* 모바일 세로 (해상도 ~ 479px)*/
-  @media all and (max-width: 479px) {
-    /*스타일입력*/
-  }
   height: 100%;
   border-radius: 0px;
   border: 0;
@@ -106,8 +94,4 @@ const Button = styled.button`
   border: 0;
   background-color: white;
 `;
-
-const Logo = styled.img`
-  margin: 0px 20px 0px 20px;
-  height: 60px;
-`;
+ */

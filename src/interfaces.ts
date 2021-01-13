@@ -10,3 +10,12 @@ export interface AlbumType {
   titleSong: string;
   songs: Array<SongType>;
 }
+
+export interface StateType {
+  isDetailOpened: boolean;
+  isPlayListOpened: boolean;
+  playList: {
+    songList: Array<SongType>;
+    nowPlaying: number;
+  };
+}
