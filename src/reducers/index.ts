@@ -3,41 +3,15 @@ import {
   OPEN_PLAYLIST,
   CLOSE_PLAYLIST,
   ADD_LIST,
+  NEXT_SONG,
 } from '../actions/ActionTypes';
-import PlayList from '../components/PlayList';
 import { StateType } from '../interfaces';
 
 const initialState: StateType = {
   isPlayListOpened: false,
   isDetailOpened: false,
   playList: {
-    songList: [
-      {
-        name: 'Oh my god',
-        youtubeID: 'om3n2ni8luE',
-        mv: true,
-      },
-      {
-        name: '사랑해',
-        youtubeID: 'TzepUKHa9lg',
-        mv: false,
-      },
-      {
-        name: 'Maybe',
-        youtubeID: 'k8pEDdNUvzI',
-        mv: false,
-      },
-      {
-        name: 'LION',
-        youtubeID: '6oanIo_2Z4Q',
-        mv: true,
-      },
-      {
-        name: 'Oh my god (English Ver.)',
-        youtubeID: 'UR-1Tgx1MeA',
-        mv: false,
-      },
-    ],
+    songList: [],
     nowPlaying: 0,
   },
 };
@@ -58,6 +32,16 @@ const reducer = createReducer(initialState, {
       songList: [...state.playList.songList, ...action.payload],
     },
   }),
+  [NEXT_SONG]: (state) => {
+    let newIndex = state.playList.nowPlaying + 1;
+    if (newIndex >= state.playList.songList.length) {
+      newIndex = 0;
+    }
+    return {
+      ...state,
+      playList: { ...state.playList, nowPlaying: newIndex },
+    };
+  },
 });
 
 export default reducer;

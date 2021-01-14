@@ -14,7 +14,7 @@ function Home() {
           <H1>미니 앨범</H1>
           <Albums>
             {mini.map((album: AlbumType) => (
-              <Album album={album} />
+              <Album key={album.name} album={album} />
             ))}
           </Albums>
         </Center>
@@ -24,7 +24,7 @@ function Home() {
           <H1>싱글 앨범</H1>
           <Albums>
             {single.map((album: AlbumType) => (
-              <Album album={album} />
+              <Album key={album.name} album={album} />
             ))}
           </Albums>
         </Center>
@@ -34,7 +34,7 @@ function Home() {
           <H1>해외 앨범</H1>
           <Albums>
             {single.map((album: AlbumType) => (
-              <Album album={album} />
+              <Album key={album.name} album={album} />
             ))}
           </Albums>
         </Center>
@@ -44,7 +44,7 @@ function Home() {
           <H1>참여 음반</H1>
           <Albums>
             {single.map((album: AlbumType) => (
-              <Album album={album} />
+              <Album key={album.name} album={album} />
             ))}
           </Albums>
         </Center>

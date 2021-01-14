@@ -19,3 +19,8 @@ export interface StateType {
     nowPlaying: number;
   };
 }
+
+export interface ActionType {
+  type: string;
+  payload?: unknown;
+}

@@ -20,11 +20,21 @@ function Navigation() {
       <Nav>
         <HomeButton>
           <Link id="home" to="/">
-            <Logo
-              // eslint-disable-next-line global-require
-              src={require('../media/logo.svg')}
-              alt="아이들 로고"
-            />
+            <svg
+              viewBox="0 0 1825 1363"
+              xmlns="http://www.w3.org/2000/svg"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              strokeMiterlimit={2}
+            >
+              <path
+                d="M531.25 559.375h-100V931.25h100V559.375zm0-159.375h-100v100h100V400zM606.25 931.25V400h96.875v434.375h43.75V400h96.875v531.25h-237.5zM890.625 400H987.5v531.25h-96.875zM1171.88 496.875h-43.75V931.25h-96.875V400h237.5v434.375h46.875V400h96.875v531.25H1171.88V496.875z"
+                stroke="#fff"
+                strokeWidth={5}
+                strokeLinecap="square"
+                fill="#fff"
+              />
+            </svg>
           </Link>
         </HomeButton>
         {/*        <Search>
@@ -62,11 +72,6 @@ const Nav = styled.div`
 const HomeButton = styled.div`
   width: 80px;
   margin: 0 auto;
-`;
-
-const Logo = styled.img`
-  margin: 0;
-  height: 60px;
 `;
 
 /* const Search = styled.div`

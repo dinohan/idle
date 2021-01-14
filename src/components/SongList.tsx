@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import React from 'react';
 import { connect } from 'react-redux';
 import actions from '../actions';
@@ -11,11 +12,11 @@ interface SongListProps {
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function SongList({ songList }: SongListProps) {
   return (
-    <div>
+    <Container>
       {songList.map((song) => (
-        <Song song={song} />
+        <Song key={song.youtubeID} song={song} />
       ))}
-    </div>
+    </Container>
   );
 }
 
@@ -33,3 +34,8 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SongList);
+
+const Container = styled.div`
+  overflow: scroll;
+  height: 300px;
+`;

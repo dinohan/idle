@@ -1,24 +1,36 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { SongType } from '../interfaces';
+import { ActionType, SongType } from '../interfaces';
 import * as types from './ActionTypes';
 
-const addList = (songList: Array<SongType>) => ({
-  type: types.ADD_LIST,
-  payload: songList,
-});
+function addList(songList: Array<SongType>): ActionType {
+  return {
+    type: types.ADD_LIST,
+    payload: songList,
+  };
+}
 
-const openPlayList = () => ({
-  type: types.OPEN_PLAYLIST,
-});
+function openPlayList(): ActionType {
+  return {
+    type: types.OPEN_PLAYLIST,
+  };
+}
 
-const closePlayList = () => ({
-  type: types.CLOSE_PLAYLIST,
-});
+function closePlayList(): ActionType {
+  return {
+    type: types.CLOSE_PLAYLIST,
+  };
+}
+
+function nextSong(): ActionType {
+  return {
+    type: types.NEXT_SONG,
+  };
+}
 
 const actions = {
   openPlayList,
   closePlayList,
   addList,
+  nextSong,
 };
 
 export default actions;

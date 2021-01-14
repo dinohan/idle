@@ -72,7 +72,7 @@ const mini: Array<AlbumType> = [
       },
       {
         name: 'Blow Your Mind',
-        youtubeID: '',
+        youtubeID: 'Q8RQiYxsQGk',
         mv: false,
       },
     ],
