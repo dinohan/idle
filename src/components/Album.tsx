@@ -41,14 +41,17 @@ const Item = styled.div`
   max-width: 200px;
   min-width: 120px;
   display: inline-block;
-  padding: 5px;
+  padding: 10px;
 
   //background-color: gray;
-  border: 1px solid gray;
+  //border: 1px solid gray;
   border-radius: 3px;
 
-  margin-left: 30px;
+  margin-left: 25px;
 
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
   @media all and (min-width: 480px) and (max-width: 767px) {
     margin-left: 20px;
   }
@@ -65,17 +68,18 @@ const AlbumImg = styled.img`
 const Bottom = styled.div``;
 
 const TitleBox = styled.div`
+  margin-top: 5px;
   width: 80%;
   font-size: 1.1em;
+  overflow: scroll;
+
   @media all and (max-width: 479px) {
     font-size: 1em;
     width: 100%;
   }
-  //background-color: red;
-  overflow: scroll;
 `;
 
 const Title = styled.h2`
   margin-left: 3px;
-  font-size: 1.1em;
+  font-size: 1em;
 `;

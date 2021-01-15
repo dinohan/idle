@@ -8,7 +8,7 @@ import AlbumInfo from '../media/AlbumInfo';
 function Home() {
   const { mini, single } = AlbumInfo;
   return (
-    <HomeBody>
+    <Container>
       <Section>
         <Center>
           <H1>미니 앨범</H1>
@@ -49,33 +49,37 @@ function Home() {
           </Albums>
         </Center>
       </Section>
-    </HomeBody>
+    </Container>
   );
 }
 
 export default Home;
 
-const HomeBody = styled.div`
+const Container = styled.div`
   //height: 5000px;
 `;
 
 const Albums = styled.div`
   white-space: nowrap;
   overflow-x: scroll;
-  padding: 10px 0px;
+  padding: 10px 30px 10px 0;
 `;
 
 const Section = styled.div`
   margin-top: 15px;
   background-color: #f5f5f6;
-  padding: 15px 0px 15px 5px;
+  padding: 15px 0;
+  @media all and (min-width: 900px) {
+    display: flex;
+    justify-content: center;
+  }
 
-  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.4);
 `;
 
 const Center = styled.div`
   @media all and (min-width: 900px) {
-    margin-left: 10vw;
+    //margin-left: 10vw;
   }
 `;
 

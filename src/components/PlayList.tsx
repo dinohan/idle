@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { connect } from 'react-redux';
-import YouTube from 'react-youtube';
+import YouTube, { Options } from 'react-youtube';
 
 import { FiChevronUp, FiChevronDown } from 'react-icons/fi';
 import { FaPause, FaPlay, FaBackward, FaForward } from 'react-icons/fa';
@@ -11,19 +11,21 @@ import actions from '../actions';
 import SongList from './SongList';
 
 interface PlayListProps {
-  nowPlay: SongType;
+  nowPlayingSong: SongType;
   isOpened: boolean;
   openPlayList;
   closePlayList;
+  previousSong;
   nextSong;
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function PlayList({
-  nowPlay,
+  nowPlayingSong,
   isOpened,
   openPlayList,
   closePlayList,
+  previousSong,
   nextSong,
 }: PlayListProps) {
   const [youtubeID, setYoutubeID] = useState('');
@@ -32,6 +34,13 @@ function PlayList({
     pauseVideo: () => null,
   });
   const [isPlaying, setPlaying] = useState(false);
+  const opts: Options = {
+    height: '233',
+    width: '100%',
+    playerVars: {
+      autoplay: 1,
+    },
+  };
 
   const resume = () => {
     player.playVideo();
@@ -51,14 +60,14 @@ function PlayList({
   };
 
   useEffect(() => {
-    if (nowPlay) {
-      if (nowPlay.youtubeID) {
-        setYoutubeID(nowPlay.youtubeID);
+    if (nowPlayingSong) {
+      if (nowPlayingSong.youtubeID) {
+        setYoutubeID(nowPlayingSong.youtubeID);
         resume();
       } else nextSong();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nowPlay]);
+  }, [nowPlayingSong]);
 
   const handleClick = () => {
     if (isOpened) closePlayList();
@@ -67,16 +76,15 @@ function PlayList({
 
   const videoEnded = () => {
     nextSong();
-    setYoutubeID(nowPlay.youtubeID);
   };
 
   return (
     <Container>
       <Header>
-        <SongTitle>{nowPlay && nowPlay.name}</SongTitle>
+        <SongTitle>{nowPlayingSong && nowPlayingSong.name}</SongTitle>
         {isOpened || (
           <Controler>
-            <FaBackward cursor="pointer" size="25" />
+            <FaBackward cursor="pointer" size="25" onClick={previousSong} />
             {isPlaying ? (
               <FaPause size="25" cursor="pointer" onClick={pause} />
             ) : (
@@ -92,24 +100,21 @@ function PlayList({
       <Body style={isOpened ? { display: 'block' } : { display: 'none' }}>
         <InnerBox>
           {youtubeID && (
-            <YouTube
-              videoId={youtubeID}
-              onReady={onReady}
-              onPlay={setPlayingPlay}
-              onPause={setPlayingPause}
-              onEnd={videoEnded}
-              opts={{
-                width: '100%',
-                height: '233px',
-                playerVars: {
-                  autoplay: 1,
-                },
-              }}
-            />
+            <YoutubeBox>
+              <YouTube
+                videoId={youtubeID}
+                onReady={onReady}
+                onPlay={setPlayingPlay}
+                onPause={setPlayingPause}
+                onEnd={videoEnded}
+                opts={opts}
+              />
+            </YoutubeBox>
           )}
+          <SongList />
           {isOpened && (
             <ControlBox>
-              <FaBackward cursor="pointer" size="25" />
+              <FaBackward cursor="pointer" size="25" onClick={previousSong} />
               {isPlaying ? (
                 <FaPause size="25" cursor="pointer" onClick={pause} />
               ) : (
@@ -118,7 +123,6 @@ function PlayList({
               <FaForward size="25" cursor="pointer" onClick={nextSong} />
             </ControlBox>
           )}
-          <SongList />
         </InnerBox>
       </Body>
     </Container>
@@ -127,7 +131,7 @@ function PlayList({
 
 function mapStateToProps(state: StateType) {
   return {
-    nowPlay: state.playList.songList[state.playList.nowPlaying],
+    nowPlayingSong: state.playList.songList[state.playList.nowPlaying],
     isOpened: state.isPlayListOpened,
   };
 }
@@ -136,6 +140,7 @@ function mapDispatchToProps(dispatch) {
   return {
     openPlayList: () => dispatch(actions.openPlayList()),
     closePlayList: () => dispatch(actions.closePlayList()),
+    previousSong: () => dispatch(actions.previousSong()),
     nextSong: () => dispatch(actions.nextSong()),
   };
 }
@@ -215,6 +220,7 @@ const Controler = styled.div`
 `;
 
 const SizeButton = styled.div`
+  margin-left: auto;
   cursor: pointer;
 `;
 
@@ -235,14 +241,38 @@ const InnerBox = styled.div`
   border-radius: 10px;
 `;
 
+const YoutubeBox = styled.div`
+  width: 100%;
+  height: 243px;
+  box-shadow: 0 10px 10px 5px #49008d;
+  z-index: 6;
+`;
+
+/* const Separate = styled.div`
+  width: 100%;
+  //height: 15px;
+  z-index: 6;
+  box-shadow: 0 10px 10px 5px #49008d;
+
+  padding: 20px 10px 0 10px;
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #ddd;
+`; */
+
 const ControlBox = styled.div`
   padding: 10px 0;
   color: #ddd;
   width: 100%;
+  height: 80px;
+
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
+  z-index: 6;
   & > * {
-    margin: 0 20px;
+    //margin: 0 20px;
   }
+
+  box-shadow: 0 -10px 10px 5px #49008d;
 `;

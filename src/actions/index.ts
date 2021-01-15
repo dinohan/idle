@@ -20,9 +20,27 @@ function closePlayList(): ActionType {
   };
 }
 
+function previousSong(): ActionType {
+  return {
+    type: types.PRE_SONG,
+  };
+}
 function nextSong(): ActionType {
   return {
     type: types.NEXT_SONG,
+  };
+}
+function jumpSong(index: number): ActionType {
+  return {
+    type: types.JUMP_SONG,
+    payload: index,
+  };
+}
+
+function deleteSong(index: number): ActionType {
+  return {
+    type: types.DEL_SONG,
+    payload: index,
   };
 }
 
@@ -30,7 +48,10 @@ const actions = {
   openPlayList,
   closePlayList,
   addList,
+  previousSong,
   nextSong,
+  deleteSong,
+  jumpSong,
 };
 
 export default actions;

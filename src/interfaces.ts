@@ -1,7 +1,9 @@
 export interface SongType {
   name: string;
   youtubeID: string;
-  mv: boolean;
+  title: boolean;
+  thumbnail: string;
+  album?: string;
 }
 
 export interface AlbumType {

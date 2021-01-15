@@ -4,6 +4,9 @@ import {
   CLOSE_PLAYLIST,
   ADD_LIST,
   NEXT_SONG,
+  PRE_SONG,
+  JUMP_SONG,
+  DEL_SONG,
 } from '../actions/ActionTypes';
 import { StateType } from '../interfaces';
 
@@ -42,6 +45,37 @@ const reducer = createReducer(initialState, {
       playList: { ...state.playList, nowPlaying: newIndex },
     };
   },
+  [PRE_SONG]: (state) => {
+    let newIndex = state.playList.nowPlaying - 1;
+    if (newIndex < 0) {
+      newIndex = state.playList.songList.length - 1;
+    }
+    return {
+      ...state,
+      playList: { ...state.playList, nowPlaying: newIndex },
+    };
+  },
+  [DEL_SONG]: (state, action) => {
+    const newList = [...state.playList.songList];
+    newList.splice(action.payload, 1);
+    let newIndex = state.playList.nowPlaying;
+    if (action.payload < state.playList.nowPlaying) newIndex -= 1;
+    return {
+      ...state,
+      playList: {
+        ...state.playList,
+        songList: newList,
+        nowPlaying: newIndex,
+      },
+    };
+  },
+  [JUMP_SONG]: (state, action) => ({
+    ...state,
+    playList: {
+      ...state.playList,
+      nowPlaying: action.payload,
+    },
+  }),
 });
 
 export default reducer;
