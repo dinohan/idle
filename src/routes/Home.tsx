@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React, { useEffect, useState } from 'react';
-import { request, GraphQLClient, gql } from 'graphql-request';
+import { request, gql } from 'graphql-request';
 
 import Album from '../components/Album';
 import { AlbumType } from '../interfaces';
@@ -12,8 +12,9 @@ function Home() {
   const [single, setSingle] = useState<Array<AlbumType>>([]);
 
   async function getAlbums() {
-    const endpoint = 'http://localhost:4000/';
-    const client = new GraphQLClient(endpoint);
+    const endpoint =
+      'https://ttu9e2u1l2.execute-api.ap-northeast-2.amazonaws.com/default/idleql';
+
     const query = gql`
       query {
         albums {
@@ -23,10 +24,11 @@ function Home() {
         }
       }
     `;
-    const { albums } = await client.request(query);
-    return albums;
-    // setMini(albums.filter((album) => album.type === 'mini'));
-    // setSingle(albums.filter((album) => album.type === 'single'));
+
+    // const data = await axios.post();
+
+    const data = await request(endpoint, query);
+    return data.albums;
   }
 
   function separate(albums: Array<AlbumType>): void {
