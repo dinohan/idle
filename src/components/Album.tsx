@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { connect } from 'react-redux';
+import axios from 'axios';
+import { gql, request } from 'graphql-request';
 
-import { AlbumType } from '../interfaces';
+import { AlbumType, SongType } from '../interfaces';
 import actions from '../actions';
 
 interface AlbumProps {
@@ -12,8 +14,27 @@ interface AlbumProps {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function Album({ album, addList }: AlbumProps) {
+  async function getSongs() {
+    const endpoint = 'http://localhost:4000/';
+    const query = gql`
+      query getSongs($album: String!) {
+        songs(album: $album) {
+          name
+          youtubeID
+          thumbnail
+          album
+        }
+      }
+    `;
+    const variables = {
+      album: album.name,
+    };
+    const { songs } = await request(endpoint, query, variables);
+    return songs;
+  }
+
   const handleClick = () => {
-    addList(album.songs);
+    getSongs().then(addList);
   };
 
   return (

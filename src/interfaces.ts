@@ -3,14 +3,13 @@ export interface SongType {
   youtubeID: string;
   title: boolean;
   thumbnail: string;
-  album?: string;
+  album: string;
 }
 
 export interface AlbumType {
   name: string;
   img: string;
-  titleSong: string;
-  songs: Array<SongType>;
+  type: string;
 }
 
 export interface StateType {

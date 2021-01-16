@@ -1,12 +1,43 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { request, GraphQLClient, gql } from 'graphql-request';
+
 import Album from '../components/Album';
 import { AlbumType } from '../interfaces';
-import AlbumInfo from '../media/AlbumInfo';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function Home() {
-  const { mini, single } = AlbumInfo;
+  // const { mini, single } = AlbumInfo;
+  const [mini, setMini] = useState<Array<AlbumType>>([]);
+  const [single, setSingle] = useState<Array<AlbumType>>([]);
+
+  async function getAlbums() {
+    const endpoint = 'http://localhost:4000/';
+    const client = new GraphQLClient(endpoint);
+    const query = gql`
+      query {
+        albums {
+          name
+          img
+          type
+        }
+      }
+    `;
+    const { albums } = await client.request(query);
+    return albums;
+    // setMini(albums.filter((album) => album.type === 'mini'));
+    // setSingle(albums.filter((album) => album.type === 'single'));
+  }
+
+  function separate(albums: Array<AlbumType>): void {
+    setMini(albums.filter((album) => album.type === 'mini'));
+    setSingle(albums.filter((album) => album.type === 'single'));
+  }
+
+  useEffect(() => {
+    getAlbums().then(separate);
+  }, []);
+
   return (
     <Container>
       <Section>
@@ -29,7 +60,7 @@ function Home() {
           </Albums>
         </Center>
       </Section>
-      <Section>
+      {/* <Section>
         <Center>
           <H1>해외 앨범</H1>
           <Albums>
@@ -48,7 +79,7 @@ function Home() {
             ))}
           </Albums>
         </Center>
-      </Section>
+      </Section> */}
     </Container>
   );
 }
