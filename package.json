@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "webpack serve --progress --mode development",
     "start": "webpack --mode development",
-    "build": "webpack --progress --mode production"
+    "build": "webpack --progress --mode production",
+    "predeploy": "yarn build",
+    "deploy": "aws s3 sync ./dist s3://idle.dinohan.com"
   },
   "dependencies": {
     "@emotion/core": "^11.0.0",
