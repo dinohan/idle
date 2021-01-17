@@ -13,5 +13,7 @@
 
 ### 백엔드 spec
 
+[자세히보기](https://github.com/dinohan/idleql)
+
 - graphQL
 - AWS lambda
