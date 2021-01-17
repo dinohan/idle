@@ -2,4 +2,16 @@
 
 리액트 공부
 
-webpack, Babel 설정을 스스로 하고(without CRA), Emtion을 사용해본다.
+### 사용한 기술
+
+- Webpack
+- Babel
+- typescript
+- ESlint
+- Emotion
+- graphQL
+
+### 백엔드 spec
+
+- graphQL
+- AWS lambda
