@@ -20,6 +20,7 @@ export interface AlbumType {
 export interface AlbumsType {
   mini: Array<AlbumType>;
   single: Array<AlbumType>;
+  part: Array<AlbumType>;
 }
 
 export interface StateType {

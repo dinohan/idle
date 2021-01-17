@@ -45,23 +45,26 @@ function Detail({ album, addList }: DetailProps) {
 
   return (
     <Container>
-      {/* <div>{JSON.stringify(album)}</div> */}
-      {/* <ul>{JSON.stringify(songList)}</ul> */}
       <Body>
         <Top>
           <Image>
             <img src={album.img} alt="" />
-            {/* <img src="https://i.imgur.com/MaJtviQ.jpg" alt="" /> */}
           </Image>
           <Description>
             <Title>{album.name}</Title>
-            <Release>{`${album.release.year}년 ${album.release.month}월 ${album.release.date}일`}</Release>
+            <Release>
+              {`${album.release.year}${album.release.year && '년'} ${
+                album.release.month
+              }${album.release.month && '월'} ${album.release.date}${
+                album.release.date && '일'
+              }`}
+            </Release>
             <Button onClick={handleClick}>+ 추가하기</Button>
           </Description>
         </Top>
         <Bottom>
           {songList.map((song, index) => (
-            <DetailSong song={song} index={index} />
+            <DetailSong key={song.youtubeID} song={song} index={index} />
           ))}
         </Bottom>
         <Placholder />
@@ -128,6 +131,7 @@ const Image = styled.div`
     width: 100%;
     max-width: 350px;
     border-radius: 3%;
+    box-shadow: 0 0 30px 10px rgba(0, 0, 0, 0.3);
   }
   @media all and (max-width: ${threshold}px) {
     width: 80%;
@@ -135,7 +139,6 @@ const Image = styled.div`
   }
 `;
 const Description = styled.div`
-  width: 50%;
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
@@ -146,6 +149,9 @@ const Description = styled.div`
 const Title = styled.div`
   font-weight: bold;
   font-size: 1.8em;
+  @media all and (max-width: ${threshold}px) {
+    font-size: 1.5em;
+  }
   padding-bottom: 5px;
 `;
 const Release = styled.div``;
@@ -173,7 +179,6 @@ const Body = styled.div`
   display: flex;
   flex-direction: column;
 
-  /* 모바일 세로 (해상도 ~ 479px)*/
   @media all and (max-width: ${threshold}px) {
     width: 100%;
   }

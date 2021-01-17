@@ -16,6 +16,7 @@ const initialState: StateType = {
     albums: {
       mini: [],
       single: [],
+      part: [],
     },
   },
   detail: {

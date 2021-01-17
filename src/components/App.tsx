@@ -26,5 +26,5 @@ export default App;
 const Container = styled.div`
   background-color: rgb(250, 250, 250);
   width: 100%;
-  // height: 100vh;
+  min-height: 100vh;
 `;

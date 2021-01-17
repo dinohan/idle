@@ -137,6 +137,7 @@ const Title = styled.h2`
 const Plus = styled.div`
   margin-left: auto;
   cursor: pointer;
+  color: #7e00bf;
   z-index: 1;
   display: flex;
   align-items: center;
