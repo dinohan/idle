@@ -1,6 +1,6 @@
 # G-IDLE
 
-#[바로가기](http://idle.dinohan.com/#/)
+# [바로가기](http://idle.dinohan.com/#/)
 
 리액트 공부용 프로젝트
 
