@@ -8,32 +8,31 @@ import { FiChevronUp, FiChevronDown } from 'react-icons/fi';
 import { FaPause, FaPlay, FaBackward, FaForward } from 'react-icons/fa';
 import { SongType, StateType } from '../interfaces';
 import actions from '../actions';
-import SongList from './SongList';
+import PlaySongList from './PlaySongList';
 
 interface PlayListProps {
   nowPlayingSong: SongType;
-  isOpened: boolean;
-  openPlayList;
-  closePlayList;
   previousSong;
   nextSong;
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-function PlayList({
-  nowPlayingSong,
-  isOpened,
-  openPlayList,
-  closePlayList,
-  previousSong,
-  nextSong,
-}: PlayListProps) {
+function PlayList({ nowPlayingSong, previousSong, nextSong }: PlayListProps) {
   const [youtubeID, setYoutubeID] = useState('');
+  const [isOpened, setOpen] = useState(false);
   const [player, setPlayer] = useState({
     playVideo: () => null,
     pauseVideo: () => null,
   });
   const [isPlaying, setPlaying] = useState(false);
+
+  const openPlayList = () => {
+    setOpen(true);
+  };
+  const closePlayList = () => {
+    setOpen(false);
+  };
+
   const opts: Options = {
     height: '233',
     width: '100%',
@@ -111,7 +110,7 @@ function PlayList({
               />
             </YoutubeBox>
           )}
-          <SongList />
+          <PlaySongList />
           {isOpened && (
             <ControlBox>
               <FaBackward cursor="pointer" size="25" onClick={previousSong} />
@@ -132,14 +131,11 @@ function PlayList({
 function mapStateToProps(state: StateType) {
   return {
     nowPlayingSong: state.playList.songList[state.playList.nowPlaying],
-    isOpened: state.isPlayListOpened,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    openPlayList: () => dispatch(actions.openPlayList()),
-    closePlayList: () => dispatch(actions.closePlayList()),
     previousSong: () => dispatch(actions.previousSong()),
     nextSong: () => dispatch(actions.nextSong()),
   };

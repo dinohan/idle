@@ -3,20 +3,19 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Scroll from 'react-scroll';
 
-import actions from '../actions';
 import { SongType, StateType } from '../interfaces';
 import Song from './Song';
 
 const scroll = Scroll.scroller;
 const ScrollElement = Scroll.Element;
 
-interface SongListProps {
+interface PlaySongListProps {
   songList: Array<SongType>;
   nowPlay: number;
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-function SongList({ songList, nowPlay }: SongListProps) {
+function PlaySongList({ songList, nowPlay }: PlaySongListProps) {
   const beforeList = songList.slice(0, nowPlay);
   const afterList = songList.slice(nowPlay + 1);
 
@@ -80,14 +79,7 @@ function mapStateToProps(state: StateType) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    openPlayList: () => dispatch(actions.openPlayList()),
-    closePlayList: () => dispatch(actions.closePlayList()),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SongList);
+export default connect(mapStateToProps)(PlaySongList);
 
 const BeforeList = styled.ul`
   list-style: none;

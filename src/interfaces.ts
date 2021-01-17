@@ -10,11 +10,25 @@ export interface AlbumType {
   name: string;
   img: string;
   type: string;
+  release: {
+    year: string;
+    month: string;
+    date: string;
+  };
+}
+
+export interface AlbumsType {
+  mini: Array<AlbumType>;
+  single: Array<AlbumType>;
 }
 
 export interface StateType {
-  isDetailOpened: boolean;
-  isPlayListOpened: boolean;
+  cache: {
+    albums: AlbumsType;
+  };
+  detail: {
+    album: AlbumType;
+  };
   playList: {
     songList: Array<SongType>;
     nowPlaying: number;

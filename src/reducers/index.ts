@@ -1,8 +1,9 @@
 import { createReducer } from '@reduxjs/toolkit';
 import {
-  OPEN_PLAYLIST,
-  CLOSE_PLAYLIST,
+  INIT_ALBUMS,
+  SET_DETAIL,
   ADD_LIST,
+  ADD_SONG,
   NEXT_SONG,
   PRE_SONG,
   JUMP_SONG,
@@ -11,8 +12,24 @@ import {
 import { StateType } from '../interfaces';
 
 const initialState: StateType = {
-  isPlayListOpened: false,
-  isDetailOpened: false,
+  cache: {
+    albums: {
+      mini: [],
+      single: [],
+    },
+  },
+  detail: {
+    album: {
+      name: '',
+      img: '',
+      type: '',
+      release: {
+        year: '',
+        month: '',
+        date: '',
+      },
+    },
+  },
   playList: {
     songList: [],
     nowPlaying: 0,
@@ -20,19 +37,32 @@ const initialState: StateType = {
 };
 
 const reducer = createReducer(initialState, {
-  [OPEN_PLAYLIST]: (state) => ({
+  [INIT_ALBUMS]: (state, action) => ({
     ...state,
-    isPlayListOpened: true,
+    cache: {
+      ...state.cache,
+      albums: action.payload,
+    },
   }),
-  [CLOSE_PLAYLIST]: (state) => ({
+  [SET_DETAIL]: (state, action) => ({
     ...state,
-    isPlayListOpened: false,
+    detail: {
+      ...state.detail,
+      album: action.payload,
+    },
   }),
   [ADD_LIST]: (state, action) => ({
     ...state,
     playList: {
       ...state.playList,
       songList: [...state.playList.songList, ...action.payload],
+    },
+  }),
+  [ADD_SONG]: (state, action) => ({
+    ...state,
+    playList: {
+      ...state.playList,
+      songList: [...state.playList.songList, action.payload],
     },
   }),
   [NEXT_SONG]: (state) => {
@@ -42,7 +72,10 @@ const reducer = createReducer(initialState, {
     }
     return {
       ...state,
-      playList: { ...state.playList, nowPlaying: newIndex },
+      playList: {
+        ...state.playList,
+        nowPlaying: newIndex,
+      },
     };
   },
   [PRE_SONG]: (state) => {
@@ -52,7 +85,10 @@ const reducer = createReducer(initialState, {
     }
     return {
       ...state,
-      playList: { ...state.playList, nowPlaying: newIndex },
+      playList: {
+        ...state.playList,
+        nowPlaying: newIndex,
+      },
     };
   },
   [DEL_SONG]: (state, action) => {

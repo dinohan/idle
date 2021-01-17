@@ -55,7 +55,6 @@ module.exports = (webpackEnv) => ({
     port: 3003,
     hot: true,
     inline: true,
-    hotOnly: true,
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),

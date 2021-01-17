@@ -1,12 +1,19 @@
 import styled from '@emotion/styled';
 import React, { useEffect, useState } from 'react';
 import { request, gql } from 'graphql-request';
+import { connect } from 'react-redux';
 
 import Album from '../components/Album';
-import { AlbumType } from '../interfaces';
+import { AlbumsType, AlbumType, StateType } from '../interfaces';
+import actions from '../actions';
+
+interface HomeProps {
+  cachedAlbums: AlbumsType;
+  initAlbums;
+}
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-function Home() {
+function Home({ cachedAlbums, initAlbums }: HomeProps) {
   // const { mini, single } = AlbumInfo;
   const [mini, setMini] = useState<Array<AlbumType>>([]);
   const [single, setSingle] = useState<Array<AlbumType>>([]);
@@ -21,6 +28,11 @@ function Home() {
           name
           img
           type
+          release {
+            year
+            month
+            date
+          }
         }
       }
     `;
@@ -31,14 +43,24 @@ function Home() {
     return data.albums;
   }
 
-  function separate(albums: Array<AlbumType>): void {
-    setMini(albums.filter((album) => album.type === 'mini'));
-    setSingle(albums.filter((album) => album.type === 'single'));
+  function separate(fetchedAlbums: Array<AlbumType>): AlbumsType {
+    const miniAlbums: Array<AlbumType> = fetchedAlbums.filter(
+      (album) => album.type === 'mini',
+    );
+    const singleAlbums: Array<AlbumType> = fetchedAlbums.filter(
+      (album) => album.type === 'single',
+    );
+    setMini(miniAlbums);
+    setSingle(singleAlbums);
+    return { mini: miniAlbums, single: singleAlbums };
   }
 
   useEffect(() => {
-    getAlbums().then(separate);
-  }, []);
+    if (cachedAlbums.mini.length || cachedAlbums.single.length) {
+      setMini(cachedAlbums.mini);
+      setSingle(cachedAlbums.single);
+    } else getAlbums().then(separate).then(initAlbums);
+  }, [cachedAlbums, initAlbums]);
 
   return (
     <Container>
@@ -86,7 +108,19 @@ function Home() {
   );
 }
 
-export default Home;
+function mapStateToProps(state: StateType) {
+  return {
+    cachedAlbums: state.cache.albums,
+  };
+}
+
+function mapDispathToProps(dispath) {
+  return {
+    initAlbums: (albums) => dispath(actions.initAlbums(albums)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispathToProps)(Home);
 
 const Container = styled.div`
   //height: 5000px;
@@ -100,14 +134,14 @@ const Albums = styled.div`
 
 const Section = styled.div`
   margin-top: 15px;
-  background-color: #f5f5f6;
+  background-color: none;
   padding: 15px 0;
   @media all and (min-width: 900px) {
     display: flex;
     justify-content: center;
   }
 
-  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.4);
+  // box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.4);
 `;
 
 const Center = styled.div`

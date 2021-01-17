@@ -1,5 +1,19 @@
-import { ActionType, SongType } from '../interfaces';
+import { ActionType, AlbumsType, AlbumType, SongType } from '../interfaces';
 import * as types from './ActionTypes';
+
+function initAlbums(albums: AlbumsType): ActionType {
+  return {
+    type: types.INIT_ALBUMS,
+    payload: albums,
+  };
+}
+
+function setDetail(album: AlbumType): ActionType {
+  return {
+    type: types.SET_DETAIL,
+    payload: album,
+  };
+}
 
 function addList(songList: Array<SongType>): ActionType {
   return {
@@ -7,16 +21,10 @@ function addList(songList: Array<SongType>): ActionType {
     payload: songList,
   };
 }
-
-function openPlayList(): ActionType {
+function addSong(song: SongType): ActionType {
   return {
-    type: types.OPEN_PLAYLIST,
-  };
-}
-
-function closePlayList(): ActionType {
-  return {
-    type: types.CLOSE_PLAYLIST,
+    type: types.ADD_SONG,
+    payload: song,
   };
 }
 
@@ -36,7 +44,6 @@ function jumpSong(index: number): ActionType {
     payload: index,
   };
 }
-
 function deleteSong(index: number): ActionType {
   return {
     type: types.DEL_SONG,
@@ -45,9 +52,10 @@ function deleteSong(index: number): ActionType {
 }
 
 const actions = {
-  openPlayList,
-  closePlayList,
+  initAlbums,
+  setDetail,
   addList,
+  addSong,
   previousSong,
   nextSong,
   deleteSong,

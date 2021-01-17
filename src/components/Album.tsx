@@ -2,17 +2,20 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { connect } from 'react-redux';
 import { gql, request } from 'graphql-request';
+import { Link } from 'react-router-dom';
+import { HiPlus } from 'react-icons/hi';
 
 import { AlbumType } from '../interfaces';
 import actions from '../actions';
 
 interface AlbumProps {
   album: AlbumType;
+  setDetail;
   addList;
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-function Album({ album, addList }: AlbumProps) {
+function Album({ album, setDetail, addList }: AlbumProps) {
   async function getSongs() {
     const endpoint =
       'https://ttu9e2u1l2.execute-api.ap-northeast-2.amazonaws.com/default/idleql';
@@ -21,6 +24,7 @@ function Album({ album, addList }: AlbumProps) {
         songs(album: $album) {
           name
           youtubeID
+          title
           thumbnail
           album
         }
@@ -37,42 +41,50 @@ function Album({ album, addList }: AlbumProps) {
     getSongs().then(addList);
   };
 
+  const handleDonw = () => {
+    setDetail(album);
+  };
+
   return (
-    <Item onClick={handleClick}>
+    <Container>
+      <Link to="/detail">
+        <LinkeLayer onMouseDown={handleDonw} />
+      </Link>
       <AlbumImg src={album.img} alt={`${album.name}의 앨범 표지`} />
       <Bottom>
         <TitleBox>
           <Title>{album.name}</Title>
         </TitleBox>
+        <Plus onClick={handleClick}>
+          <HiPlus size="1.3em" />
+        </Plus>
       </Bottom>
-    </Item>
+    </Container>
   );
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+    setDetail: (album) => dispatch(actions.setDetail(album)),
     addList: (songs) => dispatch(actions.addList(songs)),
   };
 }
 
 export default connect(null, mapDispatchToProps)(Album);
 
-const Item = styled.div`
+const Container = styled.div`
   width: 40%;
   max-width: 200px;
   min-width: 120px;
   display: inline-block;
   padding: 10px;
+  position: relative;
 
   //background-color: gray;
   //border: 1px solid gray;
-  border-radius: 3px;
 
   margin-left: 25px;
 
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.2);
-  }
   @media all and (min-width: 480px) and (max-width: 767px) {
     margin-left: 20px;
   }
@@ -81,12 +93,29 @@ const Item = styled.div`
   }
 `;
 
+const LinkeLayer = styled.div`
+  background-color: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 3px;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+`;
+
 const AlbumImg = styled.img`
   width: 100%;
   border-radius: 3px;
 `;
 
-const Bottom = styled.div``;
+const Bottom = styled.div`
+  display: flex;
+`;
 
 const TitleBox = styled.div`
   margin-top: 5px;
@@ -103,4 +132,18 @@ const TitleBox = styled.div`
 const Title = styled.h2`
   margin-left: 3px;
   font-size: 1em;
+`;
+
+const Plus = styled.div`
+  margin-left: auto;
+  cursor: pointer;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  padding: 3px;
+  border-radius: 3px;
+  //background-color: red;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
 `;
