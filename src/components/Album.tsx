@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { gql, request } from 'graphql-request';
 import { Link } from 'react-router-dom';
 import { HiPlus } from 'react-icons/hi';
+import { useAlert } from 'react-alert';
 
 import { AlbumType } from '../interfaces';
 import actions from '../actions';
@@ -16,6 +17,7 @@ interface AlbumProps {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function Album({ album, setDetail, addList }: AlbumProps) {
+  const alert = useAlert();
   async function getSongs() {
     const endpoint =
       'https://ttu9e2u1l2.execute-api.ap-northeast-2.amazonaws.com/default/idleql';
@@ -37,8 +39,18 @@ function Album({ album, setDetail, addList }: AlbumProps) {
     return songs;
   }
 
+  const success = (songs) => {
+    if (songs.length < 1) return songs;
+    const text =
+      songs.length > 1
+        ? `${songs.length}곡 추가됨`
+        : `'${songs[0].name}' 추가됨`;
+    alert.success(text);
+    return songs;
+  };
+
   const handleClick = () => {
-    getSongs().then(addList);
+    getSongs().then(success).then(addList);
   };
 
   const handleDonw = () => {

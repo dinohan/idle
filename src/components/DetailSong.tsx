@@ -3,6 +3,7 @@ import React from 'react';
 import { AiFillStar } from 'react-icons/ai';
 import { HiPlus } from 'react-icons/hi';
 import { connect } from 'react-redux';
+import { useAlert } from 'react-alert';
 
 import actions from '../actions';
 import { SongType } from '../interfaces';
@@ -15,7 +16,10 @@ interface DetailSongProps {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function DetailSong({ song, index, addSong }: DetailSongProps) {
+  const alert = useAlert();
+
   const handleClick = () => {
+    alert.success(`'${song.name}' 추가됨`);
     addSong(song);
   };
 

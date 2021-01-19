@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 import request, { gql } from 'graphql-request';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { useAlert } from 'react-alert';
+
 import actions from '../actions';
 import DetailSong from '../components/DetailSong';
 import { AlbumType, SongType, StateType } from '../interfaces';
@@ -14,8 +16,18 @@ interface DetailProps {
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function Detail({ album, addList }: DetailProps) {
   const [songList, setSongList] = useState<Array<SongType>>([]);
+  const alert = useAlert();
 
+  const success = (songs) => {
+    if (songs.length < 1) return;
+    const text =
+      songs.length > 1
+        ? `${songs.length}곡 추가됨`
+        : `'${songs[0].name}' 추가됨`;
+    alert.success(text);
+  };
   const handleClick = () => {
+    success(songList);
     addList(songList);
   };
 

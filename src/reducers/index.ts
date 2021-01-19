@@ -38,35 +38,35 @@ const initialState: StateType = {
 };
 
 const reducer = createReducer(initialState, {
-  [INIT_ALBUMS]: (state, action) => ({
+  [INIT_ALBUMS]: (state: StateType, action) => ({
     ...state,
     cache: {
       ...state.cache,
       albums: action.payload,
     },
   }),
-  [SET_DETAIL]: (state, action) => ({
+  [SET_DETAIL]: (state: StateType, action) => ({
     ...state,
     detail: {
       ...state.detail,
       album: action.payload,
     },
   }),
-  [ADD_LIST]: (state, action) => ({
+  [ADD_LIST]: (state: StateType, action) => ({
     ...state,
     playList: {
       ...state.playList,
       songList: [...state.playList.songList, ...action.payload],
     },
   }),
-  [ADD_SONG]: (state, action) => ({
+  [ADD_SONG]: (state: StateType, action) => ({
     ...state,
     playList: {
       ...state.playList,
       songList: [...state.playList.songList, action.payload],
     },
   }),
-  [NEXT_SONG]: (state) => {
+  [NEXT_SONG]: (state: StateType) => {
     let newIndex = state.playList.nowPlaying + 1;
     if (newIndex >= state.playList.songList.length) {
       newIndex = 0;
@@ -79,7 +79,7 @@ const reducer = createReducer(initialState, {
       },
     };
   },
-  [PRE_SONG]: (state) => {
+  [PRE_SONG]: (state: StateType) => {
     let newIndex = state.playList.nowPlaying - 1;
     if (newIndex < 0) {
       newIndex = state.playList.songList.length - 1;
@@ -92,7 +92,7 @@ const reducer = createReducer(initialState, {
       },
     };
   },
-  [DEL_SONG]: (state, action) => {
+  [DEL_SONG]: (state: StateType, action) => {
     const newList = [...state.playList.songList];
     newList.splice(action.payload, 1);
     let newIndex = state.playList.nowPlaying;
@@ -106,7 +106,7 @@ const reducer = createReducer(initialState, {
       },
     };
   },
-  [JUMP_SONG]: (state, action) => ({
+  [JUMP_SONG]: (state: StateType, action) => ({
     ...state,
     playList: {
       ...state.playList,
