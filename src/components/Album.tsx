@@ -59,7 +59,7 @@ function Album({ album, setDetail, addList }: AlbumProps) {
 
   return (
     <Container>
-      <Link to="/detail">
+      <Link to={`/detail/${album.name}`}>
         <LinkeLayer onMouseDown={handleDonw} />
       </Link>
       <AlbumImg src={album.img} alt={`${album.name}의 앨범 표지`} />

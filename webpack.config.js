@@ -51,7 +51,7 @@ module.exports = (webpackEnv) => ({
 
   devServer: {
     contentBase: appPublic,
-    host: '172.30.1.34',
+    host: '0.0.0.0',
     port: 3003,
     hot: true,
     inline: true,

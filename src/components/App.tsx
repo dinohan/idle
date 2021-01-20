@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import styled from '@emotion/styled';
 import React from 'react';
-import { HashRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { positions, Provider } from 'react-alert';
 import AlertTemplate from 'react-alert-template-basic';
 
@@ -23,12 +23,15 @@ function App() {
   return (
     <Container>
       <Provider template={AlertTemplate} {...options}>
-        <HashRouter>
+        <BrowserRouter>
           <Navigation />
-          <Route path="/" exact component={Home} />
-          <Route path="/detail" exact component={Detail} />
+          <Route exact path="/" component={Home} />
+          <Switch>
+            <Route path="/detail/:album" component={Detail} />
+            <Route path="/detail" component={Detail} />
+          </Switch>
           <PlayList />
-        </HashRouter>
+        </BrowserRouter>
       </Provider>
     </Container>
   );

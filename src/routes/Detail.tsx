@@ -11,10 +11,11 @@ import { AlbumType, SongType, StateType } from '../interfaces';
 interface DetailProps {
   album: AlbumType;
   addList;
+  /* match; */
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-function Detail({ album, addList }: DetailProps) {
+function Detail({ album, addList /* match */ }: DetailProps) {
   const [songList, setSongList] = useState<Array<SongType>>([]);
   const alert = useAlert();
 
