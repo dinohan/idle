@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import request, { gql } from 'graphql-request';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useAlert } from 'react-alert';
