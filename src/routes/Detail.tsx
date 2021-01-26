@@ -4,14 +4,14 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useAlert } from 'react-alert';
 
-import actions from '../actions';
+import actions from '../modules/actions';
 import DetailSong from '../components/DetailSong';
 import { AlbumType, SongType, StateType } from '../interfaces';
+import { getSongs } from '../modules/sagas';
 
 interface DetailProps {
   album: AlbumType;
   addList;
-  /* match; */
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -33,27 +33,7 @@ function Detail({ album, addList /* match */ }: DetailProps) {
   };
 
   useEffect(() => {
-    async function getSongs() {
-      const endpoint =
-        'https://ttu9e2u1l2.execute-api.ap-northeast-2.amazonaws.com/default/idleql';
-      const query = gql`
-        query getSongs($album: String!) {
-          songs(album: $album) {
-            name
-            youtubeID
-            title
-            thumbnail
-            album
-          }
-        }
-      `;
-      const variables = {
-        album: album.name,
-      };
-      const { songs } = await request(endpoint, query, variables);
-      return songs;
-    }
-    getSongs().then(setSongList);
+    getSongs(album.name).then(setSongList);
   }, [album]);
 
   return (

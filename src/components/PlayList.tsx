@@ -7,7 +7,7 @@ import YouTube, { Options } from 'react-youtube';
 import { FiChevronUp, FiChevronDown } from 'react-icons/fi';
 import { FaPause, FaPlay, FaBackward, FaForward } from 'react-icons/fa';
 import { SongType, StateType } from '../interfaces';
-import actions from '../actions';
+import actions from '../modules/actions';
 import PlaySongList from './PlaySongList';
 
 interface PlayListProps {

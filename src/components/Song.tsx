@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { FiTrash2 } from 'react-icons/fi';
 
 import { SongType } from '../interfaces';
-import actions from '../actions';
+import actions from '../modules/actions';
 
 interface SongProps {
   song: SongType;

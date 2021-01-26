@@ -1,76 +1,34 @@
 import styled from '@emotion/styled';
 import React, { useEffect, useState } from 'react';
-import { request, gql } from 'graphql-request';
 import { connect } from 'react-redux';
 
 import { AlbumsType, AlbumType, StateType } from '../interfaces';
-import actions from '../actions';
+import actions from '../modules/actions';
 import AlbumLine from '../components/AlbumLine';
 
 interface HomeProps {
   cachedAlbums: AlbumsType;
-  initAlbums;
+  // initAlbums;
+  initAsync;
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-function Home({ cachedAlbums, initAlbums }: HomeProps) {
-  // const { mini, single } = AlbumInfo;
+function Home({ cachedAlbums, initAsync }: HomeProps) {
   const [mini, setMini] = useState<Array<AlbumType>>([]);
   const [single, setSingle] = useState<Array<AlbumType>>([]);
   const [part, setPart] = useState<Array<AlbumType>>([]);
-
-  async function getAlbums() {
-    const endpoint =
-      'https://ttu9e2u1l2.execute-api.ap-northeast-2.amazonaws.com/default/idleql';
-
-    const query = gql`
-      query {
-        albums {
-          name
-          img
-          type
-          release {
-            year
-            month
-            date
-          }
-        }
-      }
-    `;
-
-    // const data = await axios.post();
-
-    const data = await request(endpoint, query);
-    return data.albums;
-  }
-
-  function separate(fetchedAlbums: Array<AlbumType>): AlbumsType {
-    const miniAlbums: Array<AlbumType> = fetchedAlbums.filter(
-      (album) => album.type === 'mini',
-    );
-    const singleAlbums: Array<AlbumType> = fetchedAlbums.filter(
-      (album) => album.type === 'single',
-    );
-    const partAlbums: Array<AlbumType> = fetchedAlbums.filter(
-      (album) => album.type === 'part',
-    );
-    setMini(miniAlbums);
-    setSingle(singleAlbums);
-    setPart(partAlbums);
-    return { mini: miniAlbums, single: singleAlbums, part: partAlbums };
-  }
 
   useEffect(() => {
     if (cachedAlbums.mini.length && cachedAlbums.single.length) {
       setMini(cachedAlbums.mini);
       setSingle(cachedAlbums.single);
       setPart(cachedAlbums.part);
-    } else getAlbums().then(separate).then(initAlbums);
-  }, [cachedAlbums, initAlbums]);
+    } else initAsync();
+  }, [cachedAlbums, initAsync]);
 
   return (
     <Container>
-      <TopHoler />
+      <TopHolder />
       <Center>
         <AlbumLine title="미니 앨범" albums={mini} />
         <AlbumLine title="싱글 앨범" albums={single} />
@@ -89,7 +47,7 @@ function mapStateToProps(state: StateType) {
 
 function mapDispathToProps(dispath) {
   return {
-    initAlbums: (albums) => dispath(actions.initAlbums(albums)),
+    initAsync: () => dispath(actions.initAsync()),
   };
 }
 
@@ -103,7 +61,7 @@ const Center = styled.div`
   align-items: center;
 `;
 
-const TopHoler = styled.div`
+const TopHolder = styled.div`
   height: 30px;
 `;
 const PlaceHoler = styled.div`

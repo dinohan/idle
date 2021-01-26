@@ -9,7 +9,7 @@ import {
   JUMP_SONG,
   DEL_SONG,
 } from '../actions/ActionTypes';
-import { StateType } from '../interfaces';
+import { StateType } from '../../interfaces';
 
 const initialState: StateType = {
   cache: {

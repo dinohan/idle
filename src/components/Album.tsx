@@ -1,45 +1,24 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { connect } from 'react-redux';
-import { gql, request } from 'graphql-request';
 import { Link } from 'react-router-dom';
 import { HiPlus } from 'react-icons/hi';
 import { useAlert } from 'react-alert';
 
 import { AlbumType } from '../interfaces';
-import actions from '../actions';
+import actions from '../modules/actions';
 
 interface AlbumProps {
   album: AlbumType;
   setDetail;
-  addList;
+  addListAsync;
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-function Album({ album, setDetail, addList }: AlbumProps) {
+function Album({ album, setDetail, addListAsync }: AlbumProps) {
   const alert = useAlert();
-  async function getSongs() {
-    const endpoint =
-      'https://ttu9e2u1l2.execute-api.ap-northeast-2.amazonaws.com/default/idleql';
-    const query = gql`
-      query getSongs($album: String!) {
-        songs(album: $album) {
-          name
-          youtubeID
-          title
-          thumbnail
-          album
-        }
-      }
-    `;
-    const variables = {
-      album: album.name,
-    };
-    const { songs } = await request(endpoint, query, variables);
-    return songs;
-  }
 
-  const success = (songs) => {
+  /*   const success = (songs) => {
     if (songs.length < 1) return songs;
     const text =
       songs.length > 1
@@ -47,20 +26,21 @@ function Album({ album, setDetail, addList }: AlbumProps) {
         : `'${songs[0].name}' 추가됨`;
     alert.success(text);
     return songs;
-  };
+  }; */
 
   const handleClick = () => {
-    getSongs().then(success).then(addList);
+    addListAsync(album.name);
+    alert.success('곡 추가됨');
   };
 
-  const handleDonw = () => {
+  const handleDown = () => {
     setDetail(album);
   };
 
   return (
     <Container>
       <Link to={`/detail/${album.name}`}>
-        <LinkeLayer onMouseDown={handleDonw} />
+        <LinkeLayer onMouseDown={handleDown} />
       </Link>
       <AlbumImg src={album.img} alt={`${album.name}의 앨범 표지`} />
       <Bottom>
@@ -78,7 +58,7 @@ function Album({ album, setDetail, addList }: AlbumProps) {
 function mapDispatchToProps(dispatch) {
   return {
     setDetail: (album) => dispatch(actions.setDetail(album)),
-    addList: (songs) => dispatch(actions.addList(songs)),
+    addListAsync: (songs) => dispatch(actions.addListAsync(songs)),
   };
 }
 

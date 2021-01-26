@@ -5,7 +5,7 @@ import { HiPlus } from 'react-icons/hi';
 import { connect } from 'react-redux';
 import { useAlert } from 'react-alert';
 
-import actions from '../actions';
+import actions from '../modules/actions';
 import { SongType } from '../interfaces';
 
 interface DetailSongProps {
