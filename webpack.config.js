@@ -3,6 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const appIndex = path.resolve(__dirname, 'src', 'index.tsx');
 const appSrc = path.resolve(__dirname, 'src');
@@ -55,6 +56,7 @@ module.exports = (webpackEnv) => ({
     port: 3003,
     hot: true,
     inline: true,
+    historyApiFallback: true,
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
@@ -63,4 +65,11 @@ module.exports = (webpackEnv) => ({
     }),
     new CleanWebpackPlugin(),
   ],
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+      }),
+    ],
+  },
 });
