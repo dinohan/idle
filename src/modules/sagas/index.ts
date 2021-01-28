@@ -5,6 +5,8 @@ import {
   ADD_LIST_ASYNC,
   INIT_ALBUMS,
   INIT_ASYNC,
+  INIT_DETAIL,
+  SET_DETAIL,
 } from '../actions/ActionTypes';
 import { ActionType, AlbumType, SongType } from '../../interfaces';
 
@@ -37,6 +39,30 @@ async function getAlbums() {
     (album: AlbumType) => album.type === 'part',
   );
   return { mini, single, part };
+}
+
+async function getAlbum(albumName: string | unknown) {
+  const endpoint =
+    'https://ttu9e2u1l2.execute-api.ap-northeast-2.amazonaws.com/default/idleql';
+  const query = gql`
+    query($albumName: String!) {
+      album(albumName: $albumName) {
+        name
+        img
+        type
+        release {
+          year
+          month
+          date
+        }
+      }
+    }
+  `;
+  const variables = {
+    albumName,
+  };
+  const { album } = await request(endpoint, query, variables);
+  return album;
 }
 
 export async function getSongs(
@@ -86,10 +112,23 @@ function* getSongsSaga(action: ActionType) {
     console.log(e);
   }
 }
+function* getAlbumSaga(action: ActionType) {
+  try {
+    const album = yield call(() => getAlbum(action.payload));
+    yield put({
+      type: SET_DETAIL,
+      payload: album,
+    });
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.log(e);
+  }
+}
 
 export function* fetchSaga(): Generator {
   yield takeEvery(INIT_ASYNC, getAlbumsSaga);
   yield takeEvery(ADD_LIST_ASYNC, getSongsSaga);
+  yield takeEvery(INIT_DETAIL, getAlbumSaga);
 }
 
 function* rootSaga(): Generator {

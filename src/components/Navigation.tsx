@@ -5,16 +5,6 @@ import styled from '@emotion/styled';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function Navigation() {
-  /* const [text, setText] = useState(''); */
-
-  /* function onChange(e: ChangeEvent<HTMLInputElement>): void {
-    setText(e.target.value);
-  }
-
-  function handleSubmit(): void {
-    console.log(text);
-  } */
-
   return (
     <>
       <Nav>
@@ -37,18 +27,6 @@ function Navigation() {
             </svg>
           </Link>
         </HomeButton>
-        {/*        <Search>
-          <Form onSubmit={handleSubmit}>
-            <Input
-              id="search-text"
-              type="search"
-              placeholder="검색"
-              value={text}
-              onChange={onChange}
-            />
-            <Button type="submit">❤️</Button>
-          </Form>
-        </Search> */}
       </Nav>
       <PlaceHolder />
     </>
@@ -73,30 +51,3 @@ const HomeButton = styled.div`
   width: 80px;
   margin: 0 auto;
 `;
-
-/* const Search = styled.div`
-  display: inline-block;
-  width: 300px;
-`;
-
-const Form = styled.form`
-  height: 24px;
-`;
-
-const Input = styled.input`
-  height: 100%;
-  border-radius: 0px;
-  border: 0;
-  flex: 1;
-
-  font-size: 16pt;
-`;
-
-const Button = styled.button`
-  height: 100%;
-  border-radius: 0px;
-  width: 37px;
-  border: 0;
-  background-color: white;
-`;
- */

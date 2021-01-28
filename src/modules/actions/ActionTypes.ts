@@ -1,5 +1,6 @@
 export const INIT_ALBUMS = 'INIT_ALBUMS';
 export const INIT_ASYNC = 'INIT_ASYNC';
+export const INIT_DETAIL = 'INIT_DETAIL';
 
 export const ADD_LIST_ASYNC = 'ADD_LIST_ASYNC';
 export const ADD_LIST = 'ADD_LIST';

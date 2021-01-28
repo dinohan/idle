@@ -12,6 +12,12 @@ function initAsync(): ActionType {
     type: types.INIT_ASYNC,
   };
 }
+function initDetail(albumName: string): ActionType {
+  return {
+    type: types.INIT_DETAIL,
+    payload: albumName,
+  };
+}
 
 function setDetail(album: AlbumType): ActionType {
   return {
@@ -65,6 +71,7 @@ function deleteSong(index: number): ActionType {
 const actions = {
   initAlbums,
   initAsync,
+  initDetail,
   setDetail,
   addListAsync,
   addList,

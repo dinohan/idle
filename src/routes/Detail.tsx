@@ -2,19 +2,28 @@ import styled from '@emotion/styled';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useAlert } from 'react-alert';
+import { RouteComponentProps } from 'react-router-dom';
 
 import actions from '../modules/actions';
 import DetailSong from '../components/DetailSong';
 import { AlbumType, SongType, StateType } from '../interfaces';
 import { getSongs } from '../modules/sagas';
 
-interface DetailProps {
+interface MatchParams {
+  params: {
+    album: string;
+  };
+}
+
+interface DetailProps extends RouteComponentProps<MatchParams> {
   album: AlbumType;
   addList;
+  initDetail;
+  match: MatchParams;
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-function Detail({ album, addList /* match */ }: DetailProps) {
+function Detail({ album, addList, initDetail, match }: DetailProps) {
   const [songList, setSongList] = useState<Array<SongType>>([]);
   const alert = useAlert();
 
@@ -32,8 +41,10 @@ function Detail({ album, addList /* match */ }: DetailProps) {
   };
 
   useEffect(() => {
-    getSongs(album.name).then(setSongList);
-  }, [album]);
+    console.log(match);
+    if (album.name) getSongs(album.name).then(setSongList);
+    else initDetail(match.params.album);
+  }, [album, initDetail, match]);
 
   return (
     <Container>
@@ -73,6 +84,7 @@ function mapStateToProps(state: StateType) {
 function mapDispathToProps(dispatch) {
   return {
     addList: (songs) => dispatch(actions.addList(songs)),
+    initDetail: (albumName) => dispatch(actions.initDetail(albumName)),
   };
 }
 
