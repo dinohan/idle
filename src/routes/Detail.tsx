@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useAlert } from 'react-alert';
 import { RouteComponentProps } from 'react-router-dom';
@@ -27,21 +27,23 @@ function Detail({ album, addList, initDetail, match }: DetailProps) {
   const [songList, setSongList] = useState<Array<SongType>>([]);
   const alert = useAlert();
 
-  const success = (songs) => {
-    if (songs.length < 1) return;
-    const text =
-      songs.length > 1
-        ? `${songs.length}곡 추가됨`
-        : `'${songs[0].name}' 추가됨`;
-    alert.success(text);
-  };
+  const success = useCallback(
+    (songs) => {
+      if (songs.length < 1) return;
+      const text =
+        songs.length > 1
+          ? `${songs.length}곡 추가됨`
+          : `'${songs[0].name}' 추가됨`;
+      alert.success(text);
+    },
+    [alert],
+  );
   const handleClick = () => {
     success(songList);
     addList(songList);
   };
 
   useEffect(() => {
-    console.log(match);
     if (album.name) getSongs(album.name).then(setSongList);
     else initDetail(match.params.album);
   }, [album, initDetail, match]);
