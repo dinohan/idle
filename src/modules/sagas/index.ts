@@ -100,18 +100,7 @@ function* getAlbumsSaga() {
     console.log(e);
   }
 }
-function* getSongsSaga(action: ActionType) {
-  try {
-    const songs = yield call(() => getSongs(action.payload));
-    yield put({
-      type: ADD_LIST,
-      payload: songs,
-    });
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.log(e);
-  }
-}
+
 function* getAlbumSaga(action: ActionType) {
   try {
     const album = yield call(() => getAlbum(action.payload));
@@ -121,7 +110,21 @@ function* getAlbumSaga(action: ActionType) {
     });
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.log(e);
+    console.error(e);
+  }
+}
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function* getSongsSaga(action) {
+  try {
+    const songs = yield call(() => getSongs(action.payload.albumName));
+    action.payload.success(songs);
+    yield put({
+      type: ADD_LIST,
+      payload: songs,
+    });
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error(e);
   }
 }
 

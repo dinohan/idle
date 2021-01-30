@@ -26,10 +26,13 @@ function setDetail(album: AlbumType): ActionType {
   };
 }
 
-function addListAsync(albumName: string): ActionType {
+function addListAsync(
+  albumName: string,
+  success: (songs: Array<SongType>) => void,
+): ActionType {
   return {
     type: types.ADD_LIST_ASYNC,
-    payload: albumName,
+    payload: { albumName, success },
   };
 }
 function addList(songList: Array<SongType>): ActionType {

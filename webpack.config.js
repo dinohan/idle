@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const dotenv = require('dotenv');
 
 const appIndex = path.resolve(__dirname, 'src', 'index.tsx');
 const appSrc = path.resolve(__dirname, 'src');
@@ -64,6 +65,13 @@ module.exports = (webpackEnv) => ({
       template: './public/index.html',
     }),
     new CleanWebpackPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': JSON.stringify(
+        Object.assign({}, dotenv.config().parsed, {
+          NODE_ENV: webpackEnv,
+        }),
+      ),
+    }),
   ],
   optimization: {
     minimizer: [

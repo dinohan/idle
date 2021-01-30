@@ -5,32 +5,33 @@ import { Link } from 'react-router-dom';
 import { HiPlus } from 'react-icons/hi';
 import { useAlert } from 'react-alert';
 
-import { AlbumType } from '../interfaces';
+import { AlbumType, SongType } from '../interfaces';
 import actions from '../modules/actions';
 
 interface AlbumProps {
   album: AlbumType;
-  setDetail;
-  addListAsync;
+  setDetail: (album: AlbumType) => void;
+  addListAsync: (
+    name: string,
+    success: (songs: Array<SongType>) => void,
+  ) => void;
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function Album({ album, setDetail, addListAsync }: AlbumProps) {
   const alert = useAlert();
 
-  /*   const success = (songs) => {
-    if (songs.length < 1) return songs;
+  function success(songs: Array<SongType>): void {
+    if (songs.length < 1) return;
     const text =
       songs.length > 1
         ? `${songs.length}곡 추가됨`
         : `'${songs[0].name}' 추가됨`;
     alert.success(text);
-    return songs;
-  }; */
+  }
 
   const handleClick = () => {
-    addListAsync(album.name);
-    alert.success('곡 추가됨');
+    addListAsync(album.name, success);
   };
 
   const handleDown = () => {
@@ -58,7 +59,7 @@ function Album({ album, setDetail, addListAsync }: AlbumProps) {
 function mapDispatchToProps(dispatch) {
   return {
     setDetail: (album) => dispatch(actions.setDetail(album)),
-    addListAsync: (songs) => dispatch(actions.addListAsync(songs)),
+    addListAsync: (songs, func) => dispatch(actions.addListAsync(songs, func)),
   };
 }
 
