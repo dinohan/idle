@@ -13,7 +13,7 @@ interface AlbumProps {
   setDetail: (album: AlbumType) => void;
   addListAsync: (
     name: string,
-    success: (songs: Array<SongType>) => void,
+    oncSuccess: (songs: Array<SongType>) => void,
   ) => void;
 }
 
@@ -21,17 +21,17 @@ interface AlbumProps {
 function Album({ album, setDetail, addListAsync }: AlbumProps) {
   const alert = useAlert();
 
-  function success(songs: Array<SongType>): void {
+  const oncSuccess = (songs: Array<SongType>): void => {
     if (songs.length < 1) return;
     const text =
       songs.length > 1
         ? `${songs.length}곡 추가됨`
         : `'${songs[0].name}' 추가됨`;
     alert.success(text);
-  }
+  };
 
   const handleClick = () => {
-    addListAsync(album.name, success);
+    addListAsync(album.name, oncSuccess);
   };
 
   const handleDown = () => {
@@ -97,7 +97,7 @@ const LinkeLayer = styled.div`
   right: 0;
   border-radius: 3px;
   &:hover {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(1, 1, 1, 0.2);
   }
 `;
 
@@ -130,7 +130,7 @@ const Title = styled.h2`
 const Plus = styled.div`
   margin-left: auto;
   cursor: pointer;
-  color: #7e00bf;
+  color: #eee;
   z-index: 1;
   display: flex;
   align-items: center;
@@ -138,6 +138,6 @@ const Plus = styled.div`
   border-radius: 3px;
   //background-color: red;
   &:hover {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(1, 1, 1, 0.2);
   }
 `;

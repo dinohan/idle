@@ -9,6 +9,7 @@ import Home from '../routes/Home';
 import Detail from '../routes/Detail';
 import Navigation from './Navigation';
 import PlayList from './PlayList';
+import Background from './Background';
 
 const options = {
   timeout: 5000,
@@ -24,6 +25,7 @@ function App() {
     <Container>
       <Provider template={AlertTemplate} {...options}>
         <BrowserRouter>
+          <Background />
           <Navigation />
           <Route exact path="/" component={Home} />
           <Switch>
@@ -41,6 +43,7 @@ export default App;
 
 const Container = styled.div`
   background-color: rgb(250, 250, 250);
+  color: #eee;
   width: 100%;
   min-height: 100vh;
 `;

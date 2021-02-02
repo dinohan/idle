@@ -28,26 +28,22 @@ function Navigation() {
           </Link>
         </HomeButton>
       </Nav>
-      <PlaceHolder />
+      {/* <PlaceHolder /> */}
     </>
   );
 }
 
 export default Navigation;
 
-// css
-const PlaceHolder = styled.div`
-  height: 60px;
-`;
 const Nav = styled.div`
-  z-index: 5;
+  z-index: 50;
+  position: relative;
   width: 100%;
   height: 60px;
-  position: fixed;
-  background: #49008d;
 `;
 
 const HomeButton = styled.div`
+  z-index: 99;
   width: 80px;
   margin: 0 auto;
 `;

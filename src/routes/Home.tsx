@@ -28,7 +28,6 @@ function Home({ cachedAlbums, initAsync }: HomeProps) {
 
   return (
     <Container>
-      <TopHolder />
       <Center>
         <AlbumLine title="미니 앨범" albums={mini} />
         <AlbumLine title="싱글 앨범" albums={single} />
@@ -53,16 +52,14 @@ function mapDispathToProps(dispath) {
 
 export default connect(mapStateToProps, mapDispathToProps)(Home);
 
-const Container = styled.div``;
+const Container = styled.div`
+  position: relative;
+`;
 
 const Center = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-
-const TopHolder = styled.div`
-  height: 30px;
 `;
 const PlaceHoler = styled.div`
   height: 100px;

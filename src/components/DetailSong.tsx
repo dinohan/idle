@@ -53,12 +53,12 @@ const Star = styled.div`
   width: 30px;
   display: flex;
   justify-content: center;
-  color: #888;
+  color: #eee;
 `;
 const Index = styled.div`
   width: 30px;
   text-align: center;
-  color: #aaa;
+  color: #eee;
 `;
 const Title = styled.div`
   width: 100%;
@@ -73,7 +73,7 @@ const Button = styled.div`
   border-radius: 3px;
   display: flex;
   align-items: center;
-  color: #7e00bf;
+  color: #eee;
   cursor: pointer;
   &:hover {
     background-color: rgba(0, 0, 0, 0.2);

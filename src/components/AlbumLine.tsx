@@ -14,13 +14,11 @@ function AlbumLine({ title, albums }: AlbumLineProps) {
     <Container>
       <H1>{title}</H1>
       <Line>
-        <Left />
         <Albums>
           {albums.map((album: AlbumType) => (
             <Album key={album.name} album={album} />
           ))}
         </Albums>
-        <Right />
       </Line>
     </Container>
   );
@@ -46,18 +44,6 @@ const Line = styled.div`
   display: flex;
   align-items: stretch;
   //height: 280px;
-`;
-const Left = styled.div`
-  z-index: 1;
-  width: 20px;
-  background-color: #fafafa;
-  box-shadow: 8px 0 8px 8px #fafafa;
-`;
-const Right = styled.div`
-  z-index: 1;
-  width: 20px;
-  background-color: #fafafa;
-  box-shadow: -8px 0 8px 8px #fafafa;
 `;
 const Albums = styled.div`
   white-space: nowrap;

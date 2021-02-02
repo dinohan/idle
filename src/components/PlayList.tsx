@@ -148,12 +148,15 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-content: center;
-  z-index: 5;
+  z-index: 99;
 
   width: 450px;
   bottom: 0px;
   right: 15px;
-  background-color: #7e00bf;
+  background-color: rgba(5, 5, 5, 0.9);
+  border-top: rgba(200, 200, 200, 0.5) 1px solid;
+  border-left: rgba(200, 200, 200, 0.5) 1px solid;
+  border-right: rgba(200, 200, 200, 0.5) 1px solid;
 
   padding: 8px;
   padding-top: 0;
@@ -233,28 +236,15 @@ const InnerBox = styled.div`
   padding: 10px;
   padding-top: 10px;
 
-  background-color: #49008d;
+  background-color: rgba(50, 50, 50, 0.5);
   border-radius: 10px;
 `;
 
 const YoutubeBox = styled.div`
   width: 100%;
   height: 243px;
-  box-shadow: 0 10px 10px 5px #49008d;
   z-index: 6;
 `;
-
-/* const Separate = styled.div`
-  width: 100%;
-  //height: 15px;
-  z-index: 6;
-  box-shadow: 0 10px 10px 5px #49008d;
-
-  padding: 20px 10px 0 10px;
-  font-weight: bold;
-  font-size: 1.2em;
-  color: #ddd;
-`; */
 
 const ControlBox = styled.div`
   padding: 10px 0;
@@ -270,5 +260,5 @@ const ControlBox = styled.div`
     //margin: 0 20px;
   }
 
-  box-shadow: 0 -10px 10px 5px #49008d;
+  // box-shadow: 0 -10px 10px 5px #49008d;
 `;

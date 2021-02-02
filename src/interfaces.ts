@@ -23,7 +23,13 @@ export interface AlbumsType {
   part: Array<AlbumType>;
 }
 
+export interface ColorType {
+  r: number;
+  g: number;
+  b: number;
+}
 export interface StateType {
+  backgroundColor: Array<ColorType>;
   cache: {
     albums: AlbumsType;
   };
@@ -33,6 +39,7 @@ export interface StateType {
   playList: {
     songList: Array<SongType>;
     nowPlaying: number;
+    prePlayed: number | null;
   };
 }
 

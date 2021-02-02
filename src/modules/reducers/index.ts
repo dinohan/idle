@@ -8,10 +8,16 @@ import {
   PRE_SONG,
   JUMP_SONG,
   DEL_SONG,
+  SET_COLOR,
+  FIRST_ADD,
 } from '../actions/ActionTypes';
 import { StateType } from '../../interfaces';
 
 const initialState: StateType = {
+  backgroundColor: [
+    { r: 94, g: 13, b: 139 },
+    { r: 235, g: 0, b: 41 },
+  ],
   cache: {
     albums: {
       mini: [],
@@ -34,6 +40,7 @@ const initialState: StateType = {
   playList: {
     songList: [],
     nowPlaying: 0,
+    prePlayed: null,
   },
 };
 
@@ -44,6 +51,10 @@ const reducer = createReducer(initialState, {
       ...state.cache,
       albums: action.payload,
     },
+  }),
+  [SET_COLOR]: (state: StateType, action) => ({
+    ...state,
+    backgroundColor: action.payload,
   }),
   [SET_DETAIL]: (state: StateType, action) => ({
     ...state,
@@ -66,6 +77,13 @@ const reducer = createReducer(initialState, {
       songList: [...state.playList.songList, action.payload],
     },
   }),
+  [FIRST_ADD]: (state: StateType) => ({
+    ...state,
+    playList: {
+      ...state.playList,
+      prePlayed: 0,
+    },
+  }),
   [NEXT_SONG]: (state: StateType) => {
     let newIndex = state.playList.nowPlaying + 1;
     if (newIndex >= state.playList.songList.length) {
@@ -76,6 +94,7 @@ const reducer = createReducer(initialState, {
       playList: {
         ...state.playList,
         nowPlaying: newIndex,
+        prePlayed: state.playList.nowPlaying,
       },
     };
   },
@@ -89,6 +108,7 @@ const reducer = createReducer(initialState, {
       playList: {
         ...state.playList,
         nowPlaying: newIndex,
+        prePlayed: state.playList.nowPlaying,
       },
     };
   },
@@ -103,6 +123,7 @@ const reducer = createReducer(initialState, {
         ...state.playList,
         songList: newList,
         nowPlaying: newIndex,
+        prePlayed: state.playList.nowPlaying,
       },
     };
   },
@@ -111,6 +132,7 @@ const reducer = createReducer(initialState, {
     playList: {
       ...state.playList,
       nowPlaying: action.payload,
+      prePlayed: state.playList.nowPlaying,
     },
   }),
 });

@@ -2,9 +2,12 @@ export const INIT_ALBUMS = 'INIT_ALBUMS';
 export const INIT_ASYNC = 'INIT_ASYNC';
 export const INIT_DETAIL = 'INIT_DETAIL';
 
+export const SET_COLOR = 'SET_COLOR';
+
 export const ADD_LIST_ASYNC = 'ADD_LIST_ASYNC';
 export const ADD_LIST = 'ADD_LIST';
 export const ADD_SONG = 'ADD_SONG';
+export const FIRST_ADD = 'FIRST_ADD';
 
 export const SET_DETAIL = 'SET_DETAIL';
 

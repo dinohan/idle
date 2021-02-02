@@ -1,80 +1,70 @@
-import { ActionType, AlbumsType, AlbumType, SongType } from '../../interfaces';
+import {
+  ActionType,
+  AlbumsType,
+  AlbumType,
+  ColorType,
+  SongType,
+} from '../../interfaces';
 import * as types from './ActionTypes';
 
-function initAlbums(albums: AlbumsType): ActionType {
-  return {
-    type: types.INIT_ALBUMS,
-    payload: albums,
-  };
-}
-function initAsync(): ActionType {
-  return {
-    type: types.INIT_ASYNC,
-  };
-}
-function initDetail(albumName: string): ActionType {
-  return {
-    type: types.INIT_DETAIL,
-    payload: albumName,
-  };
-}
+const initAlbums = (albums: AlbumsType): ActionType => ({
+  type: types.INIT_ALBUMS,
+  payload: albums,
+});
+const initAsync = (): ActionType => ({
+  type: types.INIT_ASYNC,
+});
+const initDetail = (albumName: string): ActionType => ({
+  type: types.INIT_DETAIL,
+  payload: albumName,
+});
 
-function setDetail(album: AlbumType): ActionType {
-  return {
-    type: types.SET_DETAIL,
-    payload: album,
-  };
-}
+const setColor = (colors: Array<ColorType>): ActionType => ({
+  type: types.SET_COLOR,
+  payload: colors,
+});
 
-function addListAsync(
+const setDetail = (album: AlbumType): ActionType => ({
+  type: types.SET_DETAIL,
+  payload: album,
+});
+
+const addListAsync = (
   albumName: string,
   success: (songs: Array<SongType>) => void,
-): ActionType {
-  return {
-    type: types.ADD_LIST_ASYNC,
-    payload: { albumName, success },
-  };
-}
-function addList(songList: Array<SongType>): ActionType {
-  return {
-    type: types.ADD_LIST,
-    payload: songList,
-  };
-}
-function addSong(song: SongType): ActionType {
-  return {
-    type: types.ADD_SONG,
-    payload: song,
-  };
-}
+): ActionType => ({
+  type: types.ADD_LIST_ASYNC,
+  payload: { albumName, success },
+});
+const addList = (songList: Array<SongType>): ActionType => ({
+  type: types.ADD_LIST,
+  payload: songList,
+});
+const addSong = (song: SongType): ActionType => ({
+  type: types.ADD_SONG,
+  payload: song,
+});
 
-function previousSong(): ActionType {
-  return {
-    type: types.PRE_SONG,
-  };
-}
-function nextSong(): ActionType {
-  return {
-    type: types.NEXT_SONG,
-  };
-}
-function jumpSong(index: number): ActionType {
-  return {
-    type: types.JUMP_SONG,
-    payload: index,
-  };
-}
-function deleteSong(index: number): ActionType {
-  return {
-    type: types.DEL_SONG,
-    payload: index,
-  };
-}
+const previousSong = (): ActionType => ({
+  type: types.PRE_SONG,
+});
+const nextSong = (): ActionType => ({
+  type: types.NEXT_SONG,
+});
+const jumpSong = (index: number): ActionType => ({
+  type: types.JUMP_SONG,
+  payload: index,
+});
+const deleteSong = (index: number): ActionType => ({
+  type: types.DEL_SONG,
+  payload: index,
+});
 
 const actions = {
   initAlbums,
   initAsync,
   initDetail,
+  setColor,
   setDetail,
   addListAsync,
   addList,

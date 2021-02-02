@@ -27,17 +27,15 @@ function Detail({ album, addList, initDetail, match }: DetailProps) {
   const [songList, setSongList] = useState<Array<SongType>>([]);
   const alert = useAlert();
 
-  const success = useCallback(
-    (songs) => {
-      if (songs.length < 1) return;
-      const text =
-        songs.length > 1
-          ? `${songs.length}곡 추가됨`
-          : `'${songs[0].name}' 추가됨`;
-      alert.success(text);
-    },
-    [alert],
-  );
+  const success = useCallback((songs) => {
+    if (songs.length < 1) return;
+    const text =
+      songs.length > 1
+        ? `${songs.length}곡 추가됨`
+        : `'${songs[0].name}' 추가됨`;
+    alert.success(text);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const handleClick = () => {
     success(songList);
     addList(songList);
@@ -46,6 +44,7 @@ function Detail({ album, addList, initDetail, match }: DetailProps) {
   useEffect(() => {
     if (album.name) getSongs(album.name).then(setSongList);
     else initDetail(match.params.album);
+    // if (songList.length <= 0) getSongs(album.name).then(setSongList);
   }, [album, initDetail, match]);
 
   return (
@@ -95,6 +94,7 @@ export default connect(mapStateToProps, mapDispathToProps)(Detail);
 const threshold = '599';
 
 const Container = styled.div`
+  position: relative;
   width: 100%;
   //height: 100%;
   display: flex;
@@ -165,15 +165,15 @@ const Button = styled.div`
   margin-top: 10px;
   width: 120px;
   text-align: center;
-  border: 2px solid #7e00bf;
+  border: 2px solid #eee;
   border-radius: 5px;
-  color: #7e00bf;
+  color: #eee;
   font-weight: bold;
   padding: 8px;
   cursor: pointer;
   &:hover {
-    background-color: #7e00bf;
-    color: white;
+    background-color: #eee;
+    color: black;
   }
 `;
 

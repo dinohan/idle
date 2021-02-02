@@ -66,11 +66,10 @@ module.exports = (webpackEnv) => ({
     }),
     new CleanWebpackPlugin(),
     new webpack.DefinePlugin({
-      'process.env': JSON.stringify(
-        Object.assign({}, dotenv.config().parsed, {
-          NODE_ENV: webpackEnv,
-        }),
-      ),
+      'process.env': JSON.stringify({
+        ...dotenv.config().parsed,
+        NODE_ENV: webpackEnv,
+      }),
     }),
   ],
   optimization: {
