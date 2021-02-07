@@ -17,7 +17,7 @@ module.exports = (webpackEnv) => ({
   output: {
     path: appDist,
     publicPath: '/',
-    filename: 'bundle.js',
+    filename: 'bundle.[hash:8].js',
   },
   module: {
     rules: [

@@ -16,13 +16,8 @@ function Background({ backgroundColor }: BackgroundProps) {
     new Animation(backgroundColor);
   }, [backgroundColor]);
   return (
-    <canvas
+    <Canvas
       style={{
-        width: '100vw',
-        height: '100vh',
-        position: 'fixed',
-        zIndex: 0,
-        top: 0,
         backgroundColor: `rgb(${backgroundColor[0].r}, ${backgroundColor[0].g}, ${backgroundColor[0].b})`,
       }}
       id="canvas-background"

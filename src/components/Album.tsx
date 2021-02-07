@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from '@emotion/styled';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -21,14 +21,15 @@ interface AlbumProps {
 function Album({ album, setDetail, addListAsync }: AlbumProps) {
   const alert = useAlert();
 
-  const oncSuccess = (songs: Array<SongType>): void => {
+  const oncSuccess = useCallback((songs: Array<SongType>): void => {
     if (songs.length < 1) return;
     const text =
       songs.length > 1
         ? `${songs.length}곡 추가됨`
         : `'${songs[0].name}' 추가됨`;
     alert.success(text);
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleClick = () => {
     addListAsync(album.name, oncSuccess);
